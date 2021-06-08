@@ -1,20 +1,47 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
 User.create!(
   email: "poliarddjimmy@gmail.com",
   password: "23jim0488",
   name: "Djimmy Poliard",
-  username: "jey"
+  username: "jey11"
 )
 
 User.create!(
-  email: "pacheraime@gmail.com",
+  email: "acheraime@gmail.com",
   password: "23jim0488",
   name: "Adolph Cheraime",
   username: "acher"
 )
+
+category = Category.create!(
+  name: "#{Faker::Lorem.word}srerj",
+  description: "#{Faker::Lorem.word}"
+)
+
+courses = category.courses.create!([
+  {
+    name: "#{Faker::Lorem.word}",
+    description: "#{Faker::Lorem.word}"
+  },
+  {
+    name: "#{Faker::Lorem.word}",
+    description: "#{Faker::Lorem.word}"
+  }
+])
+
+chapters = courses.each do |course|
+  course.chapters.create!(
+    title: "#{Faker::Lorem.word}",
+    description: "#{Faker::Lorem.word}",
+    objective: "#{Faker::Lorem.word}",
+  )
+end
+
+Chapter.all.each do |chapter|
+  chapter.lessons.create!(
+    title: "#{Faker::Lorem.word}",
+    description: "#{Faker::Lorem.word}",
+    content: "#{Faker::Lorem.word}",
+  )
+end
