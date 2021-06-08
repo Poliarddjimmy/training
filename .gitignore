@@ -27,4 +27,4 @@
 /config/master.key
 /vendor
 vendor
-Gemfile.lock
+# Gemfile.lock
