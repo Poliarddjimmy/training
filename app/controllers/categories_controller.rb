@@ -17,7 +17,7 @@ class CategoriesController < ApplicationController
     def create
         @category = Category.new(category_params)
         @category.valid?
-        if @category
+        if @category.save
             render json: {category: @category, status: :created}
         else
             render json: { errors: @category.errors.full_messages },
@@ -51,7 +51,7 @@ class CategoriesController < ApplicationController
 
     def category_params
         params.permit(
-         :name, :slug, :description
+         :name, :description
         )
     end
 end
