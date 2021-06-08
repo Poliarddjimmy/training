@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Course, type: :model do
 
   before(:all) do
-    @category = create(:category, name: "Another", slug: "another")
+    @category = create(:category, name: "Another")
     @course = create(:course, category: @category)
   end
   
@@ -18,16 +18,6 @@ RSpec.describe Course, type: :model do
 
   it "has a unique name" do
     course2 = build(:course, name: "The first course")
-    expect(course2).to_not be_valid
-  end
-
-  it "is not valid without a slug" do
-    course2 = build(:course, slug: nil)
-    expect(course2).to_not be_valid
-  end
-  
-  it "has a unique slug" do
-    course2 = build(:course, slug: "the-first-course")
     expect(course2).to_not be_valid
   end
   

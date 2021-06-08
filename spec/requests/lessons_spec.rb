@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe "Lessons", type: :request do
 
   before(:all) do
-    @category = create(:category, name: "aswswerdas", slug: "qwswewwqweqwe")
-    @course = create(:course, name: "hsdbfjnoifwerjw", slug: "sdsdss-sds-dsds-dsds-swerwd", category: @category)
-    @chapter = create(:chapter, title:"kjshdfhsdifiwwerwe", slug:"adwqwe-efwewr-ewerwwwer", course: @course)
-    @lesson = create(:lesson, title: "khaiuawqsddwe", slug: "werwqkjasw-we-rwe-rwer-wer", chapter: @chapter)
+    @category = create(:category, name: "aswsweewrdas")
+    @course = create(:course, name: "hsdbfjnoifwerjw", category: @category)
+    @chapter = create(:chapter, title:"kjshdfhsdifiwwerwe", course: @course)
+    @lesson = create(:lesson, title: "khaiuawqsddwe", chapter: @chapter)
   end
 
   it "should get list of lessons" do
@@ -25,7 +25,7 @@ RSpec.describe "Lessons", type: :request do
 
   it "Should create a lesson" do
     headers = { "ACCEPT" => "application/json" }
-    post "/lessons/", :params => { :title => "My lesson", slug: "the-slug", description: "The description", content: "The content", chapter_id: 1 }, :headers => headers
+    post "/lessons/", :params => { :title => "My lesson", description: "The description", content: "The content", chapter_id: 1 }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)

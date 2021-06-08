@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Categories", type: :request do
   before(:all) do
-    @category = create(:category, name: "this is a test", slug: "this-is-a-test")
+    @category = create(:category, name: "this is a test")
   end
 
   it "should get list of categories" do
@@ -29,7 +29,7 @@ RSpec.describe "Categories", type: :request do
 
   it "should creates a Category" do
     headers = { "ACCEPT" => "application/json" }
-    post "/categories", :params => { :name => "My Category" }, :headers => headers
+    post "/categories", :params => { :name => "My Category", description: "Some description" }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)

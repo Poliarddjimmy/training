@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "Chapters", type: :request do
   before(:all) do
-    @category = create(:category, name: "asdweas", slug: "qwweeqweqwe")
-    @course = create(:course, name: "hsdbfjnoifj", slug: "sdsds-sds-dsds-dsds-sd", category: @category)
-    @chapter = create(:chapter, title:"kjshdfhsdiwefi", slug:"adwqwewe-efwewr-ewerw", course: @course)
+    @category = create(:category, name: "asdweweas")
+    @course = create(:course, name: "hsdbfjnoifj", category: @category)
+    @chapter = create(:chapter, title:"kjshdfhsdiwefi", course: @course)
   end
 
   it "should get list of chapters" do
@@ -23,7 +23,7 @@ RSpec.describe "Chapters", type: :request do
 
   it "Should create a chapter" do
     headers = { "ACCEPT" => "application/json" }
-    post "/chapters/", :params => { title: "Test chapter", slug: "test-slug", description: "Some description for test chapter", objective: "This is the objective", course_id: 1 }, :headers => headers
+    post "/chapters/", :params => { title: "Test chapter", description: "Some description for test chapter", objective: "This is the objective", course_id: 1 }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")   
     expect(response.content_type).not_to be_empty 
     expect(response).to have_http_status(200)

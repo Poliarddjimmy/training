@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Lesson, type: :model do
 
   before(:all) do
-    @category = create(:category, name: "Anotherwe", slug: "anotherwe")
-    @course = create(:course, slug: "Woyyjgswefd", name: "Mmmmmmweh", category: @category)
-    @chapter = create(:chapter, title: "testwe title er", slug: "wewe-test-slug-re", course: @course)
+    @category = create(:category, name: "Anotherwe")
+    @course = create(:course, name: "Mmmmmmweh", category: @category)
+    @chapter = create(:chapter, title: "testwe title er", course: @course)
     @lesson = create(:lesson, chapter: @chapter)
   end
   
