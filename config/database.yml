@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: learnHt_production
-  username: learnHt
-  password: <%= ENV['LEARNHT_DATABASE_PASSWORD'] %>
+  database: lightpar_learnht
+  username: lightpar_jey
+  password: 23jim0488
