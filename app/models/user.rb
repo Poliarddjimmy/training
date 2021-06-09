@@ -12,4 +12,14 @@ class User < ApplicationRecord
         self.where("email = ? or username = ?", email, username).first
     end 
 
+    def as_json(options={})
+        super(
+            only: [:id, :name, :email, :username, :created_at ],
+            :methods => [:id, :name, :email, :username, :created_at],
+            :include => {
+                # :category => {:only => [:name, :slug]},
+            } 
+        )
+    end
+
 end

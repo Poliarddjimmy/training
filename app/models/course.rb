@@ -9,7 +9,17 @@ class Course < ApplicationRecord
     validates :category, :presence => true
 
 
+    def as_json(options={})
+        super(
+              :include => {
+                :category => {:only => [:name, :slug]},
+                :chapters => {:only => [:title, :slug], :include => {:lessons => {:only => [:title, :slug]}}}
+              } 
+        )
+    end
+
     private
+
     def set_slug
         self.slug = name.to_s.parameterize
     end
