@@ -7,6 +7,8 @@ RSpec.describe "Lessons", type: :request do
     @course = create(:course, name: "hsdbfjnoifwerjw", category: @category)
     @chapter = create(:chapter, title:"kjshdfhsdifiwwerwe", course: @course)
     @lesson = create(:lesson, title: "khaiuawqsddwe", chapter: @chapter)
+    @user = create(:user, name: "kjsfddsdfjf", email: "esdsdr@sdd.com", username: "dsdfsdisdhfiu")
+    @token = JsonWebToken.encode(user_id: @user.id)
   end
 
   it "should get list of lessons" do
@@ -17,14 +19,15 @@ RSpec.describe "Lessons", type: :request do
   end
 
   it "Should return a lesson" do
-    get "/lessons/#{@lesson.slug}"
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
+    get "/lessons/#{@lesson.slug}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
   end
 
   it "Should create a lesson" do
-    headers = { "ACCEPT" => "application/json" }
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
     post "/lessons/", :params => { :title => "My lesson", description: "The description", content: "The content", chapter_id: 1 }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
@@ -32,7 +35,7 @@ RSpec.describe "Lessons", type: :request do
   end
 
   it "Should update a lesson" do
-    headers = { "ACCEPT" => "application/json" }
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
     put "/lessons/#{@lesson.slug}", :params => { :name => "My lesson" }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
@@ -40,7 +43,8 @@ RSpec.describe "Lessons", type: :request do
   end
 
   it "should delete a lesson" do
-    delete "/lessons/#{@lesson.slug}"
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
+    delete "/lessons/#{@lesson.slug}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
