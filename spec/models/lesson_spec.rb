@@ -45,5 +45,6 @@ RSpec.describe Lesson, type: :model do
 
   describe "Associations" do
     it { should belong_to(:chapter)}
+    it { should have_one(:course)}
   end
 end
