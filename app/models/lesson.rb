@@ -1,5 +1,6 @@
 class Lesson < ApplicationRecord
   belongs_to :chapter, class_name: "Chapter", foreign_key: "chapter_id"
+  has_one :course, through: :chapter
 
   after_validation :set_slug, only: [:create, :update]
   
@@ -12,7 +13,8 @@ class Lesson < ApplicationRecord
     super(
       :methods => [:next_lesson, :previous_lesson],
       :include => {
-        :chapter => {:only => [:title, :slug], :include => {:course => {:only => [:name, :slug]}}}
+        :chapter => {:only => [:title, :slug], :include => {:course => {:only => [:name, :slug]}}},
+        :course => {:only => [:name, :slug], :include => {:chapters => {:only => [:title], :include => {:lessons => {:only => [:title, :slug]}}}}}
       } 
     )
   end
