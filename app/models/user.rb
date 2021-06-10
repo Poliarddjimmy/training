@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
     mount_uploader :avatar, AvatarUploader
+    has_and_belongs_to_many :courses, join_table: "course_users", foreign_key: "course_id"
     
     validates :email, presence: true, uniqueness: true
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -15,9 +16,8 @@ class User < ApplicationRecord
     def as_json(options={})
         super(
             only: [:id, :name, :email, :username, :created_at ],
-            :methods => [:id, :name, :email, :username, :created_at],
             :include => {
-                # :category => {:only => [:name, :slug]},
+                :courses => {:only => [:name, :slug]}
             } 
         )
     end

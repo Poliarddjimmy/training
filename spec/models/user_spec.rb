@@ -39,4 +39,8 @@ RSpec.describe User, :type => :model do
     user2 = build(:user, name: nil)
     expect(user2).to_not be_valid
   end
+
+  describe "Associations" do
+    it { should have_and_belong_to_many(:courses)}
+  end
 end
