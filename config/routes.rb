@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :courses, param: :_slug
   resources :chapters, param: :_slug
   resources :lessons, param: :_slug
+  resources :course_users, param: :id, exep: [:index, :show, :edit]
 
   post '/auth/login', to: 'authentication#login'
   post '/auth/register', to: 'authentication#register'
