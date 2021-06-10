@@ -6,7 +6,7 @@ class CreateCourses < ActiveRecord::Migration[6.1]
       t.string :slug
       t.boolean :active, :default =>  true
       t.string :picture
-      t.integer :category_id
+      t.belongs_to :category, null: false, foreign_key: true
 
       t.timestamps
     end
