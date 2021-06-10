@@ -1,4 +1,11 @@
 FactoryBot.define do
+  factory :course_user do
+    user_id { "MyString" }
+    course_id { "MyString" }
+    user { nil }
+    course { nil }
+  end
+
     factory :user do
         name { "Poliard Djimmy" }
         username { "Jey13"}
@@ -30,6 +37,11 @@ FactoryBot.define do
         description { "Some description for the first lesson"}
         content {"Content for the first lesson"}
         chapter {build(:chapter)}
+    end
+
+    factory :courseUser do
+        user{ build(:user) }
+        course_id { build(:course) }
     end
 
 end
