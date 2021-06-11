@@ -51,9 +51,10 @@ ActiveRecord::Schema.define(version: 2021_06_09_234723) do
     t.string "slug"
     t.boolean "active", default: true
     t.string "picture"
-    t.integer "category_id"
+    t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_courses_on_category_id"
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -80,5 +81,6 @@ ActiveRecord::Schema.define(version: 2021_06_09_234723) do
   add_foreign_key "chapters", "courses"
   add_foreign_key "course_users", "courses"
   add_foreign_key "course_users", "users"
+  add_foreign_key "courses", "categories"
   add_foreign_key "lessons", "chapters"
 end
