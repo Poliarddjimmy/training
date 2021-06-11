@@ -11,7 +11,7 @@ class Lesson < ApplicationRecord
 
   def as_json(options={})
     super(
-      :methods => [:next_lesson, :previous_lesson],
+      :methods => [:next_lesson, :previous_lesson, :next_lesson_by_chapter, :previous_lesson_by_chapter],
       :include => {
         :chapter => {:only => [:title, :slug], :include => {:course => {:only => [:name, :slug]}}},
         :course => {:only => [:name, :slug], :include => {:chapters => {:only => [:title], :include => {:lessons => {:only => [:title, :slug]}}}}}
@@ -21,12 +21,26 @@ class Lesson < ApplicationRecord
 
   def next_lesson
     lesson = Lesson.where('chapter_id = ?and id > ?',  self.chapter_id, self.id).first
-     lesson && lesson.slug
+    lesson && lesson.slug
   end
 
   def previous_lesson
     lesson = Lesson.where('chapter_id = ?and id < ?',  self.chapter_id, self.id).first
-     lesson && lesson.slug
+    lesson && lesson.slug
+  end
+
+  def next_lesson_by_chapter
+    chapter = self.course.chapters.where("id > #{self.chapter.id}").first 
+    if chapter 
+      {lesson: chapter.lessons.first.slug, chapter: chapter.title}
+    end  
+  end
+
+  def previous_lesson_by_chapter
+    chapter = self.course.chapters.where("id < #{self.chapter.id}").first 
+    if chapter 
+      {lesson: chapter.lessons.first.slug, chapter: chapter.title}
+    end 
   end
 
   private
