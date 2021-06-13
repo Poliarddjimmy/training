@@ -37,9 +37,9 @@ class Lesson < ApplicationRecord
   end
 
   def previous_lesson_by_chapter
-    chapter = self.course.chapters.where("id < #{self.chapter.id}").first 
+    chapter = self.course.chapters.where("id < #{self.chapter.id}").first
     if chapter 
-      {lesson: chapter.lessons.first.slug, chapter: chapter.title}
+      {lesson: chapter.lessons.last.slug, chapter: chapter.title}
     end 
   end
 
