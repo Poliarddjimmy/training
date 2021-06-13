@@ -29,6 +29,7 @@ RSpec.describe Course, type: :model do
   describe "Associations" do
     it { should belong_to(:category)}
     it { should have_many(:chapters)}
+    it { should have_one(:requirement)}
     it { should have_and_belong_to_many(:users)}
   end
 end

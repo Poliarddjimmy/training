@@ -1,5 +1,5 @@
 class CourseUsersController < ApplicationController
-    before_action :authorize_request
+    before_action :authorize_request, except: %i[create]
     before_action :find_course_user, except: %i[create]
 
     # POST /course_users
