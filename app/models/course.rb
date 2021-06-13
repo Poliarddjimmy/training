@@ -13,11 +13,12 @@ class Course < ApplicationRecord
 
     def as_json(options={})
         super(
-              :include => {
+            :include => {
+                :requirement => {:only => [:price, :content, :duration]},
                 :category => {:only => [:name, :slug]},
                 :chapters => {:only => [:title, :slug], :include => {:lessons => {:only => [:title, :slug]}}},
                 :users => {:only => [:name, :username]}
-              } 
+            } 
         )
     end
 
