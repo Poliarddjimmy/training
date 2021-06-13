@@ -19,7 +19,7 @@ RSpec.describe "Requirements", type: :request do
 
   it "Should create a requirement" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    post "/requirements/", :params => { content: "Test requirement", course_id: 1 }, :headers => headers
+    post "/requirements/", :params => { content: "Test requirement", duration: "1000", course_id: 1 }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")   
     expect(response.content_type).not_to be_empty 
     expect(response).to have_http_status(200)
