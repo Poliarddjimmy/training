@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     before_action :authorize_request, except: %i[show index]
-    before_action :find_user, except: %i[create index]
+    before_action :find_user, except: %i[create index subscribe]
 
     # GET /users
     def index
@@ -29,6 +29,16 @@ class UsersController < ApplicationController
             render json: @user, status: :ok
         else
             render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+
+    #GET /users/subscribe/{_course_id}
+    def subscribe
+        authorization = @current_user.subscribed(params[:_course_slug])
+        if authorization
+            render json: true
+        else
+            render json: false
         end
     end
 
