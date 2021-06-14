@@ -30,6 +30,6 @@ RSpec.describe Course, type: :model do
     it { should belong_to(:category)}
     it { should have_many(:chapters)}
     it { should have_one(:requirement)}
-    it { should have_and_belong_to_many(:users)}
+    it { should have_many(:users)}
   end
 end

@@ -15,7 +15,7 @@ RSpec.describe "CourseUsers", type: :request do
     post "/course_users/", :params => { user_id: @user.id, course_id: @course.id}, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")   
     expect(response.content_type).not_to be_empty 
-    expect(response).to have_http_status(200)
+    expect(response).to have_http_status(201)
   end
 
   it "Should update" do
