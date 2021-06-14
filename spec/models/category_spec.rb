@@ -18,6 +18,15 @@ RSpec.describe Category, type: :model do
     category2 = build(:category, name: "Another category")
     expect(category2).to_not be_valid
   end
+
+  it "has:" do
+    expect(@category).to respond_to(:as_json).with(1).argument
+  end
+
+  it "returns the specified value on any instance of the class" do
+    allow_any_instance_of(Category).to receive(:set_slug).and_return(@category.name.to_s.parameterize)
+    expect(@category.set_slug).to eq(@category.name.to_s.parameterize)
+  end
   
   it "has a without description" do
     category2 = build(:category, description: nil)
