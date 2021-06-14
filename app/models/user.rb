@@ -1,7 +1,8 @@
 class User < ApplicationRecord
     has_secure_password
     mount_uploader :avatar, AvatarUploader
-    has_and_belongs_to_many :courses, join_table: "course_users", foreign_key: "course_id"
+    has_many :course_users, class_name: "CourseUser", foreign_key: "user_id"
+    has_many :courses, through: :course_users
     
     validates :email, presence: true, uniqueness: true
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -20,6 +21,10 @@ class User < ApplicationRecord
                 :courses => {:only => [:name, :slug]}
             } 
         )
+    end
+
+    def subscribed(slug)
+        self.courses.where(slug: slug).first
     end
 
 end
