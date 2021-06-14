@@ -1,18 +1,22 @@
 class CourseUsersController < ApplicationController
-    before_action :authorize_request, except: %i[create]
-    before_action :find_course_user, except: %i[create]
+    before_action :authorize_request, except: %i[index create]
+    before_action :find_course_user, except: %i[index create]
 
+    def index
+        @da = CourseUser.all
+        render json: {da: @da, status: :ok}
+    end
     # POST /course_users
     def create
-        @course_user = CourseUser.new(course_user_params)
-        @course_user.valid?
-        if CourseUser.verify(@course_user.user_id, @course_user.course_id) 
+        course_user = CourseUser.new(course_user_params)
+        course_user.valid?
+        if CourseUser.verify(course_user.user_id, course_user.course_id) 
             render json: { message: "Exist already" }
         else
-            if @course_user.save
-                render json: {status: :created}
+            if course_user.save
+                render json: true, status: :created
             else
-                render json: { errors: @course_user.errors.full_messages },
+                render json: { errors: course_user.errors.full_messages },
                     status: :unprocessable_entity
             end    
         end
@@ -44,7 +48,7 @@ class CourseUsersController < ApplicationController
 
     def course_user_params
         params.permit(
-        :user_id, :course_id
+        :user_id, :course_id, :confirm
         )
     end
 end
