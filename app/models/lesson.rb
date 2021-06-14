@@ -14,7 +14,7 @@ class Lesson < ApplicationRecord
       :methods => [:next_lesson, :previous_lesson, :next_lesson_by_chapter, :previous_lesson_by_chapter],
       :include => {
         :chapter => {:only => [:title, :slug], :include => {:course => {:only => [:name, :slug]}}},
-        :course => {:only => [:name, :slug], :include => {:chapters => {:only => [:title], :include => {:lessons => {:only => [:title, :slug]}}}}}
+        :course => {:only => [:name, :slug], :methods => [:lessons_count, :users_count], :include => {:chapters => {:only => [:title], :include => {:lessons => {:only => [:title, :slug]}}}}}
       } 
     )
   end
