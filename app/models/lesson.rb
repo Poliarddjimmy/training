@@ -1,6 +1,8 @@
 class Lesson < ApplicationRecord
   belongs_to :chapter, class_name: "Chapter", foreign_key: "chapter_id"
   has_one :course, through: :chapter
+  has_many :lesson_users, class_name: "LessonUser", foreign_key: "lesson_id"
+  has_many :users, through: :lesson_users
 
   after_validation :set_slug, only: [:create, :update]
   
@@ -17,6 +19,10 @@ class Lesson < ApplicationRecord
         :course => {:only => [:name, :slug], :methods => [:lessons_count, :users_count], :include => {:chapters => {:only => [:title], :include => {:lessons => {:only => [:title, :slug]}}}}}
       } 
     )
+  end
+
+  def completed_by_me(id)
+    self.users.where(id: id).first
   end
 
   def next_lesson

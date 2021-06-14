@@ -3,6 +3,8 @@ class User < ApplicationRecord
     mount_uploader :avatar, AvatarUploader
     has_many :course_users, class_name: "CourseUser", foreign_key: "user_id"
     has_many :courses, through: :course_users
+    has_many :lesson_users, class_name: "LessonUser", foreign_key: "user_id"
+    has_many :lessons, through: :lesson_users
     
     validates :email, presence: true, uniqueness: true
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -18,7 +20,8 @@ class User < ApplicationRecord
         super(
             only: [:id, :name, :email, :username, :created_at ],
             :include => {
-                :courses => {:only => [:name, :slug]}
+                :courses => {:only => [:name, :slug]},
+                :lessons => {:only => [:title, :slug]}
             } 
         )
     end

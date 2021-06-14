@@ -44,4 +44,10 @@ FactoryBot.define do
         chapter {build(:chapter)}
     end
 
+
+    factory :lesson_user do
+        user { build(:user) }
+        lesson { build(:lesson) }
+    end
+
 end
