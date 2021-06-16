@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   post '/auth/register', to: 'authentication#register'
 
   get '/users/subscribe/:_course_slug', to: 'users#subscribe'
+  get '/users/completed/:_lesson_slug', to: 'users#completed_by_me'
   get '/*a', to: 'application#not_found'
 end
