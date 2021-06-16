@@ -30,4 +30,8 @@ class User < ApplicationRecord
         self.courses.where(slug: slug).first
     end
 
+    def completed_by_me(slug)
+        self.lessons.where(slug: slug).first
+    end
+
 end
