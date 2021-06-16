@@ -48,7 +48,7 @@ class LessonUsersController < ApplicationController
 
     def lesson_user_params
         params.permit(
-        :user_id, :lesson_id, :confirm
+        :user_id, :lesson_id
         )
     end
 end
