@@ -6,6 +6,8 @@ RSpec.describe User, :type => :model do
     @user1 = create(:user, name: "khdda", email: "hadbah@jkasdkjas.com", username: "jasdjjsadj")
     @category = create(:category, name: "Anrerdfdeother")
     @course = create(:course, name: "ahsiduasd", category: @category)
+    @chapter = create(:chapter, title: "testwwee title er", course: @course)
+    @lesson = create(:lesson, title: "kasdkjd", slug: "jkasdkoiqow", chapter: @chapter)
   end
   
   it "is valid with valid attributes" do
@@ -43,8 +45,10 @@ RSpec.describe User, :type => :model do
   end
 
   it "has:" do
-    expect(@user1).to respond_to(:subscribed, :as_json).with(1).argument 
-    expect(@user1.subscribed(@course.id)).to eq(@user1.courses.where(id: @course.id).first)
+    expect(@user1).to respond_to(:subscribed, :completed_by_me, :as_json).with(1).argument 
+
+    expect(@user1.completed_by_me(@lesson.slug)).to eq(@user1.lessons.where(slug: @lesson.slug).first)
+    expect(@user1.subscribed(@course.slug)).to eq(@user1.courses.where(slug: @course.slug).first)
   end
 
   describe "Associations" do
