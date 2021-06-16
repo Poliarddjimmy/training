@@ -21,10 +21,6 @@ class Lesson < ApplicationRecord
     )
   end
 
-  def completed_by_me(id)
-    self.users.where(id: id).first
-  end
-
   def next_lesson
     lesson = Lesson.where('chapter_id = ?and id > ?',  self.chapter_id, self.id).first
     lesson && lesson.slug
