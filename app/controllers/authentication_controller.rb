@@ -8,8 +8,7 @@ class AuthenticationController < ApplicationController
         token = JsonWebToken.encode(user_id: @user.id)
         time = Time.now + 6.hours.to_i
         render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                        user: #@user
-                        @user.to_json(only: [:id, :name, :email, :username, :created_at ])
+                        user: @user
                         }, status: :ok
 
         else
@@ -25,8 +24,7 @@ class AuthenticationController < ApplicationController
                 token = JsonWebToken.encode(user_id: @user.id)
                 time = Time.now + 6.hours.to_i
                 render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                                user: #@user
-                                @user.to_json(only: [:id, :name, :email, :username, :created_at ])
+                                user: @user
                                 }, status: :ok
             else
                 render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity

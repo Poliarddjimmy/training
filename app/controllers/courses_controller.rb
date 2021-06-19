@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-    # before_action :authorize_request, except: :index
+    before_action :authorize_request, except: %i[show index]
     before_action :find_course, except: %i[create index]
 
     # GET /courses
@@ -51,7 +51,7 @@ class CoursesController < ApplicationController
 
     def course_params
         params.permit(
-        :picture, :name, :slug, :description, :category_id
+        :picture, :name, :slug, :description, :category_id, :user_id
         )
     end
 end

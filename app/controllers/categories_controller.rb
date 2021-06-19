@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-    # before_action :authorize_request, except: :index
+    before_action :authorize_request, except: :index
     before_action :find_category, except: %i[create index]
 
     # GET /categories

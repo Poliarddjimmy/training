@@ -1,5 +1,5 @@
 class ChaptersController < ApplicationController
-    # before_action :authorize_request, except: :index
+    before_action :authorize_request, except: :index
     before_action :find_chapter, except: %i[create index]
 
     # GET /chapters

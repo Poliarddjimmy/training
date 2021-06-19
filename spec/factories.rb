@@ -18,6 +18,18 @@ FactoryBot.define do
         category {build(:category)}
     end
 
+    factory :requirement do
+        price { "" }
+        duration { "1000" }
+        content { "This is the content for this requirement" }
+        course { build(:course) }
+    end
+
+    factory :courseUser do
+        user { build(:user) }
+        course { build(:course) }
+    end
+
     factory :chapter do
         title { " The first chapter "}
         description { "Some description for the first chapter"}
@@ -30,6 +42,12 @@ FactoryBot.define do
         description { "Some description for the first lesson"}
         content {"Content for the first lesson"}
         chapter {build(:chapter)}
+    end
+
+
+    factory :lesson_user do
+        user { build(:user) }
+        lesson { build(:lesson) }
     end
 
 end

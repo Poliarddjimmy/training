@@ -9,6 +9,16 @@ class Chapter < ApplicationRecord
   validates_presence_of :objective
   validates :course, :presence => true
 
+  def as_json(options={})
+    super(
+      :include => {
+        :lessons => {:only => [:title, :slug]},
+        :course => {:only => [:name, :slug]}
+      } 
+    )
+  end
+
+
   private
   def set_slug
     self.slug = title.to_s.parameterize

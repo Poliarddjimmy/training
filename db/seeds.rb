@@ -1,6 +1,6 @@
 require 'faker'
 
-User.create!(
+user = User.create!(
   email: "poliarddjimmy@gmail.com",
   password: "23jim0488",
   name: "Djimmy Poliard",
@@ -22,11 +22,13 @@ category = Category.create!(
 courses = category.courses.create!([
   {
     name: "#{Faker::Lorem.word}",
-    description: "#{Faker::Lorem.word}"
+    description: "#{Faker::Lorem.word}",
+    user: user
   },
   {
     name: "#{Faker::Lorem.word}",
-    description: "#{Faker::Lorem.word}"
+    description: "#{Faker::Lorem.word}",
+    user: user
   }
 ])
 
@@ -38,10 +40,22 @@ chapters = courses.each do |course|
   )
 end
 
+Course.first.chapters.create!(
+    title: "This is a lesson",
+    description: "This is a description for this lesson",
+    objective: "This is a objective for this lesson"
+  )
+
 Chapter.all.each do |chapter|
   chapter.lessons.create!(
     title: "#{Faker::Lorem.word}",
     description: "#{Faker::Lorem.word}",
-    content: "#{Faker::Lorem.word}",
+    content: "#{Faker::Lorem.word}"
   )
 end
+
+Chapter.first.lessons.create!(
+    title: "This is a lesson",
+    description: "This is a description for this lesson",
+    content: "This is a content for this lesson"
+  )

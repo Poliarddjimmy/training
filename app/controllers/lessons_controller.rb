@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-    # before_action :authorize_request, except: :index
+    before_action :authorize_request, except: :index
     before_action :find_lesson, except: %i[create index]
 
     # GET /lessons

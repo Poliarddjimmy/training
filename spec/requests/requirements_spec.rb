@@ -1,48 +1,41 @@
 require 'rails_helper'
 
-RSpec.describe "Chapters", type: :request do
+RSpec.describe "Requirements", type: :request do
   before(:all) do
-    @user = create(:user, name: "kjsfdsdfjf", email: "ewesdr@sdd.com", username: "dfisdwewhfiu")
+    @user = create(:user, name: "kjsfdsadsdfjf", email: "ewesdr@sddsd.com", username: "dfisdwasdqewhfiu")
     @token = JsonWebToken.encode(user_id: @user.id)
-    @category = create(:category, name: "asdweweas")
-    @course = create(:course, name: "hsdbfjnoifj", category: @category, user: @user)
-    @chapter = create(:chapter, title:"kjshdfhsdiwefi", course: @course)
+    @category = create(:category, name: "asdfrfweweas")
+    @course = create(:course, name: "hsdbfjfrernoifj", category: @category, user: @user)
+    @requirement = create(:requirement, content:"kjshd hiwuehiur ej rifhsdiwefi", course: @course)
   end
 
-  it "should get list of chapters" do
-    get '/chapters'
-    expect(response.content_type).to eq("application/json; charset=utf-8")  
-    expect(response.content_type).not_to be_empty
-    expect(response).to have_http_status(200)
-  end
-
-  it "Should return a chapter" do
+  it "Should return a requirement" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
-    get "/chapters/#{@chapter.slug}", :headers => headers
+    get "/requirements/#{@requirement.id}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
   end
 
-  it "Should create a chapter" do
+  it "Should create a requirement" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    post "/chapters/", :params => { title: "Test chapter", description: "Some description for test chapter", objective: "This is the objective", course_id: 1 }, :headers => headers
+    post "/requirements/", :params => { content: "Test requirement", duration: "1000", course_id: 1 }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")   
     expect(response.content_type).not_to be_empty 
     expect(response).to have_http_status(200)
   end
 
-  it "Should update a chapter" do
+  it "Should update a requirement" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    put "/chapters/#{@chapter.slug}", :params => { :desctiption => "My chapter" }, :headers => headers
+    put "/requirements/#{@requirement.id}", :params => { :content => "My requirement" }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
   end
 
-  it "should delete a chapter" do
+  it "should delete a requirement" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    delete "/chapters/#{@chapter.slug}", :headers => headers
+    delete "/requirements/#{@requirement.id}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")  
     expect(response.content_type).not_to be_empty  
     expect(response).to have_http_status(200)

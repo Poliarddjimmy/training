@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe "Categories", type: :request do
   before(:all) do
     @category = create(:category, name: "this is a test")
+    @user = create(:user, name: "kjssdfdfjf", email: "er@sdsdd.com", username: "dfsdisdhfiu")
+    @token = JsonWebToken.encode(user_id: @user.id)
   end
 
   it "should get list of categories" do
@@ -13,14 +15,15 @@ RSpec.describe "Categories", type: :request do
   end
 
   it "should show a category" do
-    get "/categories/#{@category.slug}"
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
+    get "/categories/#{@category.slug}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")     
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
   end
 
   it "should get update a category" do
-    headers = { "ACCEPT" => "application/json" }
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
     put "/categories/#{@category.slug}", :params => { description: "Some description for test category" }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")  
     expect(response.content_type).not_to be_empty   
@@ -28,7 +31,7 @@ RSpec.describe "Categories", type: :request do
   end
 
   it "should creates a Category" do
-    headers = { "ACCEPT" => "application/json" }
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}"  }
     post "/categories", :params => { :name => "My Category", description: "Some description" }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
@@ -36,7 +39,8 @@ RSpec.describe "Categories", type: :request do
   end
 
   it "should delete a Category" do
-    delete "/categories/#{@category.slug}"
+    headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
+    delete "/categories/#{@category.slug}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
