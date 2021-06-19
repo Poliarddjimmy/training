@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Chapter, type: :model do
   before(:all) do
+    @user = create(:user, name: "kjsfdswewdfedjf", email: "ewesdr@sweddde.com", username: "dfedisdwewewhfiu")
     @category = create(:category, name: "Anothweewer")
-    @course = create(:course, name: "Mmmmwemh", category: @category)
+    @course = create(:course, name: "Mmmmwemh", category: @category, user: @user)
     @chapter = create(:chapter, title: "this is good", course: @course)
   end
   

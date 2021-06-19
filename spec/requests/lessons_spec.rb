@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe "Lessons", type: :request do
 
   before(:all) do
-    @category = create(:category, name: "aswsweewrdas")
-    @course = create(:course, name: "hsdbfjnoifwerjw", category: @category)
-    @chapter = create(:chapter, title:"kjshdfhsdifiwwerwe", course: @course)
-    @lesson = create(:lesson, title: "khaiuawqsddwe", chapter: @chapter)
     @user = create(:user, name: "kjsfddsdfjf", email: "esdsdr@sdd.com", username: "dsdfsdisdhfiu")
     @token = JsonWebToken.encode(user_id: @user.id)
+    @category = create(:category, name: "aswsweewrdas")
+    @course = create(:course, name: "hsdbfjnoifwerjw", category: @category, user: @user)
+    @chapter = create(:chapter, title:"kjshdfhsdifiwwerwe", course: @course)
+    @lesson = create(:lesson, title: "khaiuawqsddwe", chapter: @chapter)
   end
 
   it "should get list of lessons" do

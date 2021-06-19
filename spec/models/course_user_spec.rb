@@ -4,9 +4,8 @@ RSpec.describe CourseUser, type: :model do
   
   before(:all) do
     @category = create(:category, name: "Awewnsokdother")
-    @course = create(:course, name: "kajskjasd", category: @category)
     @user = create(:user, name: "kjwesfdswewdfjf", email: "ewesdwer@swedd.com", username: "dfiwesdwewewhfiu")
-
+    @course = create(:course, name: "kajskjasd", category: @category, user: @user)
     @course_user = create(:courseUser, user_id: @user.id, course_id: @course.id)
   end
 

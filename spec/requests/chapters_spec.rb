@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Chapters", type: :request do
   before(:all) do
-    @category = create(:category, name: "asdweweas")
-    @course = create(:course, name: "hsdbfjnoifj", category: @category)
-    @chapter = create(:chapter, title:"kjshdfhsdiwefi", course: @course)
     @user = create(:user, name: "kjsfdsdfjf", email: "ewesdr@sdd.com", username: "dfisdwewhfiu")
     @token = JsonWebToken.encode(user_id: @user.id)
+    @category = create(:category, name: "asdweweas")
+    @course = create(:course, name: "hsdbfjnoifj", category: @category, user: @user)
+    @chapter = create(:chapter, title:"kjshdfhsdiwefi", course: @course)
   end
 
   it "should get list of chapters" do

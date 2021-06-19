@@ -1,5 +1,6 @@
 class Course < ApplicationRecord
     belongs_to :category, class_name: "Category", foreign_key: "category_id"
+    belongs_to :user, class_name: "User", foreign_key: "user_id"
     has_many :chapters, class_name: "Chapter", foreign_key: "course_id"
     has_many :lessons, through: :chapters
     has_many :course_users, class_name: "CourseUser", foreign_key: "course_id"

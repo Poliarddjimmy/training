@@ -4,8 +4,8 @@ RSpec.describe Course, type: :model do
 
   before(:all) do
     @category = create(:category, name: "Another")
-    @course = create(:course, category: @category)
     @user = create(:user, name: "kjsfdswewdfjf", email: "ewesdr@swedd.com", username: "dfisdwewewhfiu")
+    @course = create(:course, category: @category, user: @user)
   end
   
   it "is valid with valid attributes" do
@@ -43,6 +43,7 @@ RSpec.describe Course, type: :model do
 
   describe "Associations" do
     it { should belong_to(:category)}
+    it { should belong_to(:user)}
     it { should have_many(:chapters)}
     it { should have_one(:requirement)}
     it { should have_many(:users)}

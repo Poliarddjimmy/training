@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe Lesson, type: :model do
 
   before(:all) do
+    @user = create(:user, name: "kjsfddswewdfjf", email: "ewesddr@swedd.com", username: "dsfisdwewewhfiu")
     @category = create(:category, name: "Anotherwe")
-    @course = create(:course, name: "Mmmmmmweh", category: @category)
+    @course = create(:course, name: "Mmmmmmweh", category: @category, user: @user)
     @chapter = create(:chapter, title: "testwe title er", course: @course)
     @lesson = create(:lesson, chapter: @chapter)
-    @user = create(:user, name: "kjsfddswewdfjf", email: "ewesddr@swedd.com", username: "dsfisdwewewhfiu")
   end
   
   it "is valid with valid attributes" do

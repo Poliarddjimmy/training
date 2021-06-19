@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Requirements", type: :request do
   before(:all) do
-    @category = create(:category, name: "asdfrfweweas")
-    @course = create(:course, name: "hsdbfjfrernoifj", category: @category)
-    @requirement = create(:requirement, content:"kjshd hiwuehiur ej rifhsdiwefi", course: @course)
     @user = create(:user, name: "kjsfdsadsdfjf", email: "ewesdr@sddsd.com", username: "dfisdwasdqewhfiu")
     @token = JsonWebToken.encode(user_id: @user.id)
+    @category = create(:category, name: "asdfrfweweas")
+    @course = create(:course, name: "hsdbfjfrernoifj", category: @category, user: @user)
+    @requirement = create(:requirement, content:"kjshd hiwuehiur ej rifhsdiwefi", course: @course)
   end
 
   it "Should return a requirement" do

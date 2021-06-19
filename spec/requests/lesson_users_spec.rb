@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "LessonUsers", type: :request do
   before(:all) do
-    @category = create(:category, name: "assddedweweas")
-    @course = create(:course, name: "hsdbdefjdsnoifj", category: @category)
     @user = create(:user, name: "kjsfdssddfedjf", email: "ewesdsder@sdd.com", username: "dsdfisdedwewhfiu")
+    @token = JsonWebToken.encode(user_id: @user.id)
+    @category = create(:category, name: "assddedweweas")
+    @course = create(:course, name: "hsdbdefjdsnoifj", category: @category, user: @user)
     @chapter = create(:chapter, title:"kjshdfhssddifiwwerwe", course: @course)
     @lesson = create(:lesson, title: "khasdisduawqsddwe", chapter: @chapter)
     @lessonUser = create(:lesson_user, user: @user, lesson: @lesson)
-    @token = JsonWebToken.encode(user_id: @user.id)
   end
 
   it "Should create" do

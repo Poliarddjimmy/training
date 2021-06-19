@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe LessonUser, type: :model do
   before(:all) do
+    @user = create(:user, name: "kjwesfdswewdfsdjf", email: "ewesdwer@swesddd.com", username: "dfiwesdsdwewewhfiu")
     @category = create(:category, name: "Awewwensokdother")
-    @course = create(:course, name: "kajweskjasd", category: @category)
+    @course = create(:course, name: "kajweskjasd", category: @category, user: @user)
     @chapter = create(:chapter, title: "teswetwe title er", course: @course)
     @lesson = create(:lesson, title: "teswetasgdwe title er", chapter: @chapter)
-    @user = create(:user, name: "kjwesfdswewdfsdjf", email: "ewesdwer@swesddd.com", username: "dfiwesdsdwewewhfiu")
 
     @course_user = create(:courseUser, user_id: @user.id, course_id: @course.id)
   end

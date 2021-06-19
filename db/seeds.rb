@@ -1,6 +1,6 @@
 require 'faker'
 
-User.create!(
+user = User.create!(
   email: "poliarddjimmy@gmail.com",
   password: "23jim0488",
   name: "Djimmy Poliard",
@@ -22,11 +22,13 @@ category = Category.create!(
 courses = category.courses.create!([
   {
     name: "#{Faker::Lorem.word}",
-    description: "#{Faker::Lorem.word}"
+    description: "#{Faker::Lorem.word}",
+    user: user
   },
   {
     name: "#{Faker::Lorem.word}",
-    description: "#{Faker::Lorem.word}"
+    description: "#{Faker::Lorem.word}",
+    user: user
   }
 ])
 

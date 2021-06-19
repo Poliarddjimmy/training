@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe Requirement, type: :model do
 
   before(:all) do
+    @user = create(:user, name: "kjwesfdswewewdfsdjf", email: "ewesdwewqer@swesddd.com", username: "dfiweqwesdsdwewewhfiu")
     @category = create(:category, name: "Anotiuhihweewer")
-    @course = create(:course, name: "Mmkjmmwemh", category: @category)
+    @course = create(:course, name: "Mmkjmmwemh", category: @category, user: @user)
     @requirement = create(:requirement, duration: "1000", content: "this is good content", course: @course)
   end
   

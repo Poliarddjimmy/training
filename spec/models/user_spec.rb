@@ -5,7 +5,7 @@ RSpec.describe User, :type => :model do
   before(:all) do
     @user1 = create(:user, name: "khdda", email: "hadbah@jkasdkjas.com", username: "jasdjjsadj")
     @category = create(:category, name: "Anrerdfdeother")
-    @course = create(:course, name: "ahsiduasd", category: @category)
+    @course = create(:course, name: "ahsiduasd", category: @category, user: @user1)
     @chapter = create(:chapter, title: "testwwee title er", course: @course)
     @lesson = create(:lesson, title: "kasdkjd", slug: "jkasdkoiqow", chapter: @chapter)
   end

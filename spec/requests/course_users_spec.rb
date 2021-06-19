@@ -4,8 +4,8 @@ RSpec.describe "CourseUsers", type: :request do
 
   before(:all) do
     @category = create(:category, name: "asdedweweas")
-    @course = create(:course, name: "hsdbdefjnoifj", category: @category)
     @user = create(:user, name: "kjsfdsdfedjf", email: "ewesdder@sdd.com", username: "dfisdedwewhfiu")
+    @course = create(:course, name: "hsdbdefjnoifj", category: @category, user: @user)
     @courseUser = create(:courseUser, user: @user, course: @course)
     @token = JsonWebToken.encode(user_id: @user.id)
   end
