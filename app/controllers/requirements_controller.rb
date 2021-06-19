@@ -44,8 +44,6 @@ class RequirementsController < ApplicationController
     end
 
     def requirement_params
-        params.permit(
-        :price, :content, :duration, :course_id
-        )
+        params.require(:requirement).permit(:price, :content, :duration, :course_id)
     end
 end

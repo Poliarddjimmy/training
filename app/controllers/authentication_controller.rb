@@ -3,8 +3,8 @@ class AuthenticationController < ApplicationController
 
     # POST /auth/login
     def login
-        @user = User.find_by_email(params[:email])
-        if @user&.authenticate(params[:password])
+        @user = User.find_by_email(params[:user][:email])
+        if @user&.authenticate(params[:user][:password])
         token = JsonWebToken.encode(user_id: @user.id)
         time = Time.now + 6.hours.to_i
         render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
@@ -18,7 +18,7 @@ class AuthenticationController < ApplicationController
 
      # POST /auth/register
      def register
-        user = User.find_by_email_or_username(params[:email], params[:username])
+        user = User.find_by_email_or_username(params[:user][:email], params[:user][:username])
         if !user
             if @user = User.create(register_params)
                 token = JsonWebToken.encode(user_id: @user.id)
@@ -38,11 +38,11 @@ class AuthenticationController < ApplicationController
     private
 
     def login_params
-        params.permit(:email, :password)
+        params.require(:user).permit(:email, :password)
     end
 
     def register_params
-        params.permit(:name, :username, :email, :password, :password_confirmation)
+        params.require(:user).permit(:name, :username, :email, :password, :password_confirmation)
     end
 
 end

@@ -47,8 +47,6 @@ class CourseUsersController < ApplicationController
     end
 
     def course_user_params
-        params.permit(
-        :user_id, :course_id, :confirm
-        )
+        params.require(:course_user).permit(:user_id, :course_id, :confirm)
     end
 end
