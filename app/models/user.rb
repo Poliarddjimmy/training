@@ -7,6 +7,7 @@ class User < ApplicationRecord
     has_many :lessons, through: :lesson_users
     has_many :role_users, class_name: "RoleUser", foreign_key: "user_id"
     has_many :roles, through: :role_users
+    has_many :manageCourses, class_name: "Course", foreign_key: "user_id"
     
     validates :email, presence: true, uniqueness: true
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -22,6 +23,7 @@ class User < ApplicationRecord
         super(
             only: [:id, :name, :email, :username, :created_at ],
             :include => {
+                :roles => {:only => [:name]},
                 :courses => {:only => [:name, :slug]},
                 :lessons => {:only => [:title, :slug]}
             } 
@@ -36,22 +38,12 @@ class User < ApplicationRecord
         self.lessons.where(slug: slug).first
     end
 
-    def admin
-        check = self.roles.first 
-        if check 
-            return check.name  === 'admin'
-        else
-            return false
-        end
+    def has_role?(role)
+        roles.where({ name: role}.compact).exists?
     end
 
-    def teacher
-        check = self.roles.first 
-        if check 
-            return check.name  === 'teacher'
-        else
-            return false
-        end
+    def add_role(role)
+        role = Role.find_or_create_by!({ name: role}.compact)
+        roles << role
     end
-
 end
