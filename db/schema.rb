@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_14_192546) do
+ActiveRecord::Schema.define(version: 2021_06_19_195133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,22 @@ ActiveRecord::Schema.define(version: 2021_06_14_192546) do
     t.index ["course_id"], name: "index_requirements_on_course_id"
   end
 
+  create_table "role_users", force: :cascade do |t|
+    t.bigint "role_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["role_id"], name: "index_role_users_on_role_id"
+    t.index ["user_id"], name: "index_role_users_on_user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "username"
@@ -108,4 +124,6 @@ ActiveRecord::Schema.define(version: 2021_06_14_192546) do
   add_foreign_key "lesson_users", "users"
   add_foreign_key "lessons", "chapters"
   add_foreign_key "requirements", "courses"
+  add_foreign_key "role_users", "roles"
+  add_foreign_key "role_users", "users"
 end

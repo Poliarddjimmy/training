@@ -6,6 +6,15 @@ FactoryBot.define do
         password { "dfsbsdfbsdfnsj" }
     end
 
+    factory :role do
+        name { "Admin" }
+    end
+
+    factory :role_user do
+        role { build(:role) }
+        user { build(:user) }
+    end
+
     factory :category do
         name { "The first test category" }
         description { "Some description for the first category"}
@@ -25,7 +34,7 @@ FactoryBot.define do
         course { build(:course) }
     end
 
-    factory :courseUser do
+    factory :course_user do
         user { build(:user) }
         course { build(:course) }
     end
