@@ -26,7 +26,7 @@ RSpec.describe "Chapters", type: :request do
 
   it "Should create a chapter" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    post "/chapters/", :params => { title: "Test chapter", description: "Some description for test chapter", objective: "This is the objective", course_id: 1 }, :headers => headers
+    post "/chapters/", :params => { chapter: {title: "Test chapter", description: "Some description for test chapter", objective: "This is the objective", course_id: 1} }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")   
     expect(response.content_type).not_to be_empty 
     expect(response).to have_http_status(200)
@@ -34,7 +34,7 @@ RSpec.describe "Chapters", type: :request do
 
   it "Should update a chapter" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    put "/chapters/#{@chapter.slug}", :params => { :desctiption => "My chapter" }, :headers => headers
+    put "/chapters/#{@chapter.slug}", :params => { chapter: { :desctiption => "My chapter"} }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)

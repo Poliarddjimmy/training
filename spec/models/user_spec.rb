@@ -46,7 +46,10 @@ RSpec.describe User, :type => :model do
 
   it "has:" do
     expect(@user1).to respond_to(:subscribed, :completed_by_me, :as_json).with(1).argument 
+    expect(@user1).to respond_to(:admin, :teacher) 
 
+    expect(@user1.admin).to  eq(false)
+    expect(@user1.teacher).to  eq(false)
     expect(@user1.completed_by_me(@lesson.slug)).to eq(@user1.lessons.where(slug: @lesson.slug).first)
     expect(@user1.subscribed(@course.slug)).to eq(@user1.courses.where(slug: @course.slug).first)
   end
@@ -54,5 +57,7 @@ RSpec.describe User, :type => :model do
   describe "Associations" do
     it { should have_many(:courses)}
     it { should have_many(:lessons)}
+    it { should have_many(:role_users)}
+    it { should have_many(:roles)}
   end
 end

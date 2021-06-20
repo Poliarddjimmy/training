@@ -8,7 +8,11 @@ RSpec.describe LessonUser, type: :model do
     @chapter = create(:chapter, title: "teswetwe title er", course: @course)
     @lesson = create(:lesson, title: "teswetasgdwe title er", chapter: @chapter)
 
-    @course_user = create(:courseUser, user_id: @user.id, course_id: @course.id)
+    @lesson_user = create(:lesson_user, user_id: @user.id, lesson_id: @lesson.id)
+  end
+
+  it "is valid with valid attributes" do
+    expect(@lesson_user).to be_valid
   end
 
   describe "Associations" do

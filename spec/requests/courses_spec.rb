@@ -24,7 +24,7 @@ RSpec.describe "Courses", type: :request do
 
   it "Should create a course" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    post "/courses/", :params => { name: "My course", description: "My description", category_id: @category.id, user_id: @user.id  }, :headers => headers
+    post "/courses/", :params => { course: {name: "My course", description: "My description", category_id: @category.id, user_id: @user.id}  }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
@@ -32,7 +32,7 @@ RSpec.describe "Courses", type: :request do
 
   it "should update a course" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    put "/courses/#{@course.slug}", :params => { description: "Some description for test course" }, :headers => headers
+    put "/courses/#{@course.slug}", :params => { course: { description: "Some description for test course"} }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")  
     expect(response.content_type).not_to be_empty   
     expect(response).to have_http_status(200)

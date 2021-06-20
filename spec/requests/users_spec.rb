@@ -22,7 +22,7 @@ RSpec.describe "Users", type: :request do
 
   it "Should create a user" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    post "/users/", :params => { :name => "My Category" }, :headers => headers
+    post "/users/", :params => { user: { :name => "My Category"} }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response).to have_http_status(200)
     expect(response.content_type).not_to be_empty
@@ -30,7 +30,7 @@ RSpec.describe "Users", type: :request do
 
   it "Should update a user" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    put "/users/#{@user.username}", :params => { :name => "My Category" }, :headers => headers
+    put "/users/#{@user.username}", :params => {  user: { :name => "My Category"} }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response).to have_http_status(200)
     expect(response.content_type).not_to be_empty
