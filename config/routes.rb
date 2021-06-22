@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :course_users, param: :id, exep: [:show, :edit]
   resources :requirements, param: :id, exep: [:index, :edit]
   resources :lesson_users, param: :id, exep: [:show, :edit]
+  resources :roles, param: :_slug, exep: [:edit]
+  resources :role_users, param: :id, exep: [:show, :edit]
 
   post '/auth/login', to: 'authentication#login'
   post '/auth/register', to: 'authentication#register'

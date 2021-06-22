@@ -47,8 +47,6 @@ class LessonUsersController < ApplicationController
     end
 
     def lesson_user_params
-        params.permit(
-        :user_id, :lesson_id
-        )
+        params.require(:lesson_user).permit(:user_id, :lesson_id)
     end
 end

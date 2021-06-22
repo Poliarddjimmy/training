@@ -15,20 +15,22 @@ User.create!(
 )
 
 category = Category.create!(
-  name: "#{Faker::Lorem.word}srerj",
-  description: "#{Faker::Lorem.word}"
+  name: "Web development",
+  description: "All course on web development"
 )
 
 courses = category.courses.create!([
   {
-    name: "#{Faker::Lorem.word}",
-    description: "#{Faker::Lorem.word}",
-    user: user
+    name: "full stack development",
+    description: "The study plan is developed over 12 months. The Master's Degree is made up of 10 modules and a Final Master's Project, with a clear business link, which begins at the end of the first module and extends throughout the entire program. ",
+    user: user,
+    picture: "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190626123927/untitlsssssed.png"
   },
   {
-    name: "#{Faker::Lorem.word}",
-    description: "#{Faker::Lorem.word}",
-    user: user
+    name: "Learn HTML/CSS",
+    description: "You can launch a new career in web development today by learning HTML & CSS. You don't need a computer science degree or expensive software. All you need is a computer, a bit of time, a lot of determination, and a teacher you trust. I've taught HTML and CSS to countless coworkers and held training sessions for fortune 100 companies. I am that teacher you can trust.",
+    user: user,
+    picture: "https://cdn-media-1.freecodecamp.org/ghost/2019/04/css-html-1.png"
   }
 ])
 

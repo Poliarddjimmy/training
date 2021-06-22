@@ -6,7 +6,11 @@ RSpec.describe CourseUser, type: :model do
     @category = create(:category, name: "Awewnsokdother")
     @user = create(:user, name: "kjwesfdswewdfjf", email: "ewesdwer@swedd.com", username: "dfiwesdwewewhfiu")
     @course = create(:course, name: "kajskjasd", category: @category, user: @user)
-    @course_user = create(:courseUser, user_id: @user.id, course_id: @course.id)
+    @course_user = create(:course_user, user_id: @user.id, course_id: @course.id)
+  end
+
+  it "is valid with valid attributes" do
+    expect(@course_user).to be_valid
   end
 
   it "has:" do

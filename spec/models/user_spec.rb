@@ -45,7 +45,10 @@ RSpec.describe User, :type => :model do
   end
 
   it "has:" do
-    expect(@user1).to respond_to(:subscribed, :completed_by_me, :as_json).with(1).argument 
+    expect(@user1).to respond_to(:subscribed, :completed_by_me, :as_json, :has_role?, :add_role).with(1).argument 
+
+    expect(@user1.has_role?("Admin")).to  eq(@user1.roles.where({ name: "Admin"}.compact).exists?)
+    expect(@user1.add_role("Admin")).to  eq(@user1.roles <<  Role.find_or_create_by!({ name: "Admin"}.compact))
 
     expect(@user1.completed_by_me(@lesson.slug)).to eq(@user1.lessons.where(slug: @lesson.slug).first)
     expect(@user1.subscribed(@course.slug)).to eq(@user1.courses.where(slug: @course.slug).first)
@@ -54,5 +57,8 @@ RSpec.describe User, :type => :model do
   describe "Associations" do
     it { should have_many(:courses)}
     it { should have_many(:lessons)}
+    it { should have_many(:role_users)}
+    it { should have_many(:roles)}
+    it { should have_many(:manageCourses) } 
   end
 end

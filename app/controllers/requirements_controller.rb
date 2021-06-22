@@ -40,12 +40,10 @@ class RequirementsController < ApplicationController
     def find_requirement
         @requirement = Requirement.find(params[:id])
         rescue ActiveRecord::RecordNotFound
-        render json: { errors: 'lesson not found' }, status: :not_found
+        render json: { errors: 'Requirement not found' }, status: :not_found
     end
 
     def requirement_params
-        params.permit(
-        :price, :content, :duration, :course_id
-        )
+        params.require(:requirement).permit(:price, :content, :duration, :course_id)
     end
 end

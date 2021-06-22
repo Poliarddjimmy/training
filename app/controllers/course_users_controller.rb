@@ -11,10 +11,11 @@ class CourseUsersController < ApplicationController
         course_user = CourseUser.new(course_user_params)
         course_user.valid?
         if CourseUser.verify(course_user.user_id, course_user.course_id) 
-            render json: { message: "Exist already" }
+            render json: { message: "You have access to this course already" }
         else
             if course_user.save
-                render json: true, status: :created
+                render json: {course: course_user.course, haveAcess: true}, status: :ok
+                # render json: true, status: :created
             else
                 render json: { errors: course_user.errors.full_messages },
                     status: :unprocessable_entity
@@ -47,8 +48,6 @@ class CourseUsersController < ApplicationController
     end
 
     def course_user_params
-        params.permit(
-        :user_id, :course_id, :confirm
-        )
+        params.require(:course_user).permit(:user_id, :course_id, :confirm)
     end
 end

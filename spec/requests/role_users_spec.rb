@@ -1,26 +1,24 @@
 require 'rails_helper'
 
-RSpec.describe "CourseUsers", type: :request do
-
+RSpec.describe "RoleUsers", type: :request do
   before(:all) do
-    @category = create(:category, name: "asdedweweas")
-    @user = create(:user, name: "kjsfdsdfedjf", email: "ewesdder@sdd.com", username: "dfisdedwewhfiu")
-    @course = create(:course, name: "hsdbdefjnoifj", category: @category, user: @user)
-    @course_user = create(:course_user, user: @user, course: @course)
+    @user = create(:user, name: "kjsfdsdfeedwdjf", email: "ewesdwder@sdd.ecodwm", username: "dfwdeisdedwewhfiu")
+    @role = create(:role, name: "hsdbeeeeedefjsdnoifj")
+    @role_user = create(:role_user, user: @user, role: @role)
     @token = JsonWebToken.encode(user_id: @user.id)
   end
 
   it "Should create" do
     headers = { "ACCEPT" => "application/json" }
-    post "/course_users/", :params => { course_user: {user_id: @user.id, course_id: @course.id} }, :headers => headers
+    post "/role_users/", :params => { role_user: {user_id: @user.id, role_id: @role.id} }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")   
     expect(response.content_type).not_to be_empty 
-    expect(response).to have_http_status(200)
+    expect(response).to have_http_status(201)
   end
 
   it "Should update" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    put "/course_users/#{@course_user.id}", :params => { course_user: {:confirm => true } }, :headers => headers
+    put "/role_users/#{@role_user.id}", :params => { role_user: {:user_id => @user.id } }, :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")    
     expect(response.content_type).not_to be_empty
     expect(response).to have_http_status(200)
@@ -28,7 +26,7 @@ RSpec.describe "CourseUsers", type: :request do
 
   it "should delete" do
     headers = { "ACCEPT" => "application/json", "Authorization" => "Bearer #{@token}" }
-    delete "/course_users/#{@course_user.id}", :headers => headers
+    delete "/role_users/#{@role_user.id}", :headers => headers
     expect(response.content_type).to eq("application/json; charset=utf-8")  
     expect(response.content_type).not_to be_empty  
     expect(response).to have_http_status(200)
