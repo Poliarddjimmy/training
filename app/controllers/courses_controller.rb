@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
     before_action :authorize_request, except: %i[show index]
     before_action :find_course, except: %i[create index]
+    before_action :current_user
 
     # GET /courses
     def index
@@ -10,7 +11,12 @@ class CoursesController < ApplicationController
 
     # GET /courses/{slug}
     def show
-        render json: @course, status: :ok
+        haveAcess = false
+        if @current_user
+            puts @current_user.name
+            haveAcess = !!@course.subscribed(@current_user)
+        end
+        render json: {course: @course, haveAcess: haveAcess}, status: :ok
     end
 
     # POST /courses

@@ -1,4 +1,6 @@
 class Lesson < ApplicationRecord
+  include Slug
+
   belongs_to :chapter, class_name: "Chapter", foreign_key: "chapter_id"
   has_one :course, through: :chapter
   has_many :lesson_users, class_name: "LessonUser", foreign_key: "lesson_id"
@@ -32,14 +34,14 @@ class Lesson < ApplicationRecord
   end
 
   def next_lesson_by_chapter
-    chapter = self.course.chapters.where("id > #{self.chapter.id}").first 
+    chapter = course.chapters.where("id > #{self.chapter.id}").first 
     if chapter 
       {lesson: chapter.lessons.first.slug, chapter: chapter.title}
     end  
   end
 
   def previous_lesson_by_chapter
-    chapter = self.course.chapters.where("id < #{self.chapter.id}").first
+    chapter = course.chapters.where("id < #{self.chapter.id}").first
     if chapter 
       {lesson: chapter.lessons.last.slug, chapter: chapter.title}
     end 
@@ -47,7 +49,7 @@ class Lesson < ApplicationRecord
 
   private
   def set_slug
-    self.slug = title.to_s.parameterize
+    self.slug = Slug.slug_generator(self.title)
   end
 
 end

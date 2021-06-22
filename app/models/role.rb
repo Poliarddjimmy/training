@@ -1,4 +1,6 @@
 class Role < ApplicationRecord
+    include Slug 
+    
     has_many :role_users
     has_many :users, through: :role_users
 
@@ -8,6 +10,6 @@ class Role < ApplicationRecord
 
     private
     def set_slug
-        self.slug = name.to_s.parameterize
+        self.slug = Slug.slug_generator(self.name)
     end
 end

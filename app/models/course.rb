@@ -1,4 +1,7 @@
 class Course < ApplicationRecord
+    include Slug
+    include DefaultPicture
+
     belongs_to :category, class_name: "Category", foreign_key: "category_id"
     belongs_to :user, class_name: "User", foreign_key: "user_id"
     has_many :chapters, class_name: "Chapter", foreign_key: "course_id"
@@ -8,6 +11,7 @@ class Course < ApplicationRecord
     has_one :requirement, class_name: "Requirement", foreign_key: "course_id"
 
     after_validation :set_slug, only: [:create, :update]
+    after_validation :set_picture, only: [:create]
 
     validates :name, presence: true, uniqueness: true
     validates :description, presence: true
@@ -25,21 +29,28 @@ class Course < ApplicationRecord
         )
     end
 
+    def subscribed(id)
+        users.where(id: id).first
+    end
+
     def lessons_count
-        self.lessons.count
+        lessons.count
     end
 
     def users_count
-        self.users.count
+        users.count
     end
 
     def subscribed(id)
-        self.users.where(id: id).first
+        users.where(id: id).first
     end
 
     private
-
     def set_slug
-        self.slug = name.to_s.parameterize
+        self.slug = Slug.slug_generator(self.name)
+    end
+
+    def set_picture
+        self.picture ||= DefaultPicture.picture
     end
 end 

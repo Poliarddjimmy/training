@@ -1,4 +1,5 @@
 class Chapter < ApplicationRecord
+  include Slug
   belongs_to :course, class_name: "Course", foreign_key: "course_id"
   has_many :lessons, class_name: "Lesson", foreign_key: "chapter_id"
 
@@ -21,7 +22,7 @@ class Chapter < ApplicationRecord
 
   private
   def set_slug
-    self.slug = title.to_s.parameterize
+      self.slug = Slug.slug_generator(self.title)
   end
 
 end

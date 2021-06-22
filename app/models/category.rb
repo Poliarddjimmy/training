@@ -1,4 +1,6 @@
 class Category < ApplicationRecord
+  include Slug
+  
   has_many :courses, class_name: "Course", foreign_key: "category_id"
 
   after_validation :set_slug, only: [:create, :update]
@@ -8,6 +10,6 @@ class Category < ApplicationRecord
 
   private
   def set_slug
-    self.slug = name.to_s.parameterize
+    self.slug = Slug.slug_generator(self.name)
   end
 end
